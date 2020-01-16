@@ -8,12 +8,12 @@ addons:
       secure: "assMaUTeT1621WVrbEPXUWeal5SKjjUKo39nYxQ7r5ps3VWrkvGenXwEv4mjZQJ1CkTb3YQa9LZhENSACFQfgkZ7fuI/mpuZsWQtYWW6mYQ9amV2ts9ZUwjyH0QSUXBNVcYfJey7wc78SExY0jBdgzQj11w1zU6NwY7tRnMdu8yb7IMGve16NUyQ5LwbMSUS1a8/D6AItwkaLFXaeq6+is8K8+S4sP80Km3+NcmBevDiMg52oS9uOq+2ZeY4AenL171eIQ6UHugMBjQoGLyiVL74qZ/gCiZdN6AjyAp3yN+roit4tQjgpJmZetQJ3tND/n430vkQ0Vvzir5n7Hg2TTHnGIcK4KcFfzgPsJJKEkolWXCLG7gcqna5vlFq0FG0RxAEewAegt/n5p88g3V/RPt3rzCLFyr+egFKnXTLeA/ScdIZbgaeJKNFu7QOCM5bHEYsacXxD1X6F3tn6moq2JrvgnZfhFI0joRgzksXDtskv5C0vG1u9ciBHe2vPQfL8HzOb8OMg2nuVhsJgrMz4jozdhtN4PwBtRpazsvfpWzwwl76QuDdJbglbxdJ2xORhgRdgK2sPFqi7GjM2wEQ8wTnxOd6Pc6Nr8dOoAZ7yQhn2ZimvjXECYWpwO4oBFcU10wS+BIuAkpqcXWE3Yf2g68oKLYyC/T6fk2gI4isN2Q="
 
 script:
-  # JaCoCo is used to have code coverage, the agent has to be activated
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+  - mvn clean verify sonar:sonar -Pcoverage -Dsonar.scm.disabled=true -Dsonar.language=java
 
 cache:
   directories:
-  - $HOME/.m2
+  - $HOME/.m2/repository
+  - $HOME/.sonar/cache
 
 before_cache:
   - rm -rf $HOME/.m2/repository/ru/r2cloud/
