@@ -1,6 +1,7 @@
 package ru.r2cloud.logging;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,7 +22,7 @@ public class JournaldFormatterTest {
 		LogRecord record = createLogRecord(Level.SEVERE);
 		assertEquals("<3>test message [TestLogger]\n", formatter.format(record));
 	}
-	
+
 	@Test
 	public void testInfo() throws Exception {
 		LogRecord record = createLogRecord(Level.INFO);
@@ -33,13 +34,13 @@ public class JournaldFormatterTest {
 		LogRecord record = createLogRecord(Level.WARNING);
 		assertEquals("<4>test message [TestLogger]\n", formatter.format(record));
 	}
-	
+
 	@Test
 	public void testFiner() throws Exception {
 		LogRecord record = createLogRecord(Level.FINER);
 		assertEquals("<7>test message [TestLogger]\n", formatter.format(record));
 	}
-	
+
 	@Test
 	public void testSource() throws Exception {
 		LogRecord record = createLogRecord(Level.SEVERE);
@@ -47,12 +48,20 @@ public class JournaldFormatterTest {
 		record.setSourceMethodName("testMethod");
 		assertEquals("<3>test message [TestClass testMethod]\n", formatter.format(record));
 	}
-	
+
 	@Test
 	public void testSource2() throws Exception {
 		LogRecord record = createLogRecord(Level.SEVERE);
 		record.setSourceClassName("TestClass");
 		assertEquals("<3>test message [TestClass]\n", formatter.format(record));
+	}
+
+	@Test
+	public void testThrowable() throws Exception {
+		LogRecord record = createLogRecord(Level.SEVERE);
+		record.setThrown(new Exception("something went wrong"));
+		String message = formatter.format(record);
+		assertTrue(message.startsWith("<3>test message\njava.lang.Exception: something went wrong\n\tat ru.r2cloud.logging.JournaldFormatterTest.testThrowable(JournaldFormatterTest.java:"));
 	}
 
 	private static LogRecord createLogRecord(Level level) {
