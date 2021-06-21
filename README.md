@@ -1,4 +1,4 @@
-## About [![Build Status](https://travis-ci.org/dernasherbrezon/journald-formatter.svg?branch=master)](https://travis-ci.org/dernasherbrezon/journald-formatter) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ru.r2cloud%3Ajournald-formatter&metric=alert_status)](https://sonarcloud.io/dashboard?id=ru.r2cloud%3Ajournald-formatter)
+## About [![Build Status](https://travis-ci.com/dernasherbrezon/journald-formatter.svg?branch=master)](https://travis-ci.com/dernasherbrezon/journald-formatter) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ru.r2cloud%3Ajournald-formatter&metric=alert_status)](https://sonarcloud.io/dashboard?id=ru.r2cloud%3Ajournald-formatter)
 
 This project provides special JUL formatter. It will format log levels as numbers instead of strings. These numbers are from syslog format. Using these numbers could help you assign proper log level in journald. See the example below.
 
