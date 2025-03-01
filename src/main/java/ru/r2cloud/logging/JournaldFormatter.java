@@ -31,10 +31,10 @@ public class JournaldFormatter extends Formatter {
 		if (record.getThrown() != null) {
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
-			pw.println();
 			record.getThrown().printStackTrace(pw);
 			pw.close();
-			throwable = sw.toString();
+			throwable = sw.toString().trim(); // remove last \n
+			throwable = "\n" + throwable;
 		}
 		return String.format(format, dat, source, record.getLoggerName(), convertLevelToSyslog(record.getLevel()), message, throwable);
 	}

@@ -61,7 +61,13 @@ public class JournaldFormatterTest {
 		LogRecord record = createLogRecord(Level.SEVERE);
 		record.setThrown(new Exception("something went wrong"));
 		String message = formatter.format(record);
-		assertTrue(message.startsWith("<3>test message\njava.lang.Exception: something went wrong\n\tat ru.r2cloud.logging.JournaldFormatterTest.testThrowable(JournaldFormatterTest.java:"));
+		// @formatter:off
+		String expected = "<3>test message [TestLogger]\n"
+				+ "java.lang.Exception: something went wrong\n"
+				+ "	at ru.r2cloud.logging.JournaldFormatterTest.testThrowable(JournaldFormatterTest.java:62)\n";
+		// @formatter:on
+		assertTrue(message.startsWith(expected));
+		assertTrue(message.endsWith(")\n")); // no extra new line
 	}
 
 	private static LogRecord createLogRecord(Level level) {
@@ -75,7 +81,7 @@ public class JournaldFormatterTest {
 	public void start() throws Exception {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Properties props = new Properties();
-		props.put("java.util.logging.JournaldFormatter.format", "<%4$s>%5$s%6$s [%2$s]%n");
+		props.put("java.util.logging.JournaldFormatter.format", "<%4$s>%5$s [%2$s]%6$s%n");
 		props.store(baos, "no comments");
 		LogManager.getLogManager().readConfiguration(new ByteArrayInputStream(baos.toByteArray()));
 		formatter = new JournaldFormatter();
