@@ -12,31 +12,31 @@ public class JournaldFormatter extends Formatter {
 
     private final String format = LogManager.getLogManager().getProperty("java.util.logging.JournaldFormatter.format");
 
-	private final Date dat = new Date();
+	private final Date date = new Date();
 
 	@Override
-	public synchronized String format(LogRecord record) {
-		dat.setTime(record.getMillis());
+	public synchronized String format(LogRecord entry) {
+		date.setTime(entry.getMillis());
 		String source;
-		if (record.getSourceClassName() != null) {
-			source = record.getSourceClassName();
-			if (record.getSourceMethodName() != null) {
-				source += " " + record.getSourceMethodName();
+		if (entry.getSourceClassName() != null) {
+			source = entry.getSourceClassName();
+			if (entry.getSourceMethodName() != null) {
+				source += " " + entry.getSourceMethodName();
 			}
 		} else {
-			source = record.getLoggerName();
+			source = entry.getLoggerName();
 		}
-		String message = formatMessage(record);
+		String message = formatMessage(entry);
 		String throwable = "";
-		if (record.getThrown() != null) {
+		if (entry.getThrown() != null) {
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
-			record.getThrown().printStackTrace(pw);
+			entry.getThrown().printStackTrace(pw);
 			pw.close();
 			throwable = sw.toString().trim(); // remove last \n
 			throwable = "\n" + throwable;
 		}
-		return String.format(format, dat, source, record.getLoggerName(), convertLevelToSyslog(record.getLevel()), message, throwable);
+		return String.format(format, date, source, entry.getLoggerName(), convertLevelToSyslog(entry.getLevel()), message, throwable);
 	}
 
 	private static int convertLevelToSyslog(Level level) {

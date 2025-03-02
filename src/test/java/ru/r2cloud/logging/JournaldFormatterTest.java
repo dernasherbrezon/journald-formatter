@@ -18,49 +18,49 @@ public class JournaldFormatterTest {
 	private JournaldFormatter formatter;
 
 	@Test
-	public void testSevere() throws Exception {
-		LogRecord record = createLogRecord(Level.SEVERE);
-		assertEquals("<3>test message [TestLogger]\n", formatter.format(record));
+	public void testSevere() {
+		LogRecord log = createLogRecord(Level.SEVERE);
+		assertEquals("<3>test message [TestLogger]\n", formatter.format(log));
 	}
 
 	@Test
-	public void testInfo() throws Exception {
-		LogRecord record = createLogRecord(Level.INFO);
-		assertEquals("<6>test message [TestLogger]\n", formatter.format(record));
+	public void testInfo() {
+		LogRecord log = createLogRecord(Level.INFO);
+		assertEquals("<6>test message [TestLogger]\n", formatter.format(log));
 	}
 
 	@Test
-	public void testWarning() throws Exception {
-		LogRecord record = createLogRecord(Level.WARNING);
-		assertEquals("<4>test message [TestLogger]\n", formatter.format(record));
+	public void testWarning() {
+		LogRecord log = createLogRecord(Level.WARNING);
+		assertEquals("<4>test message [TestLogger]\n", formatter.format(log));
 	}
 
 	@Test
-	public void testFiner() throws Exception {
-		LogRecord record = createLogRecord(Level.FINER);
-		assertEquals("<7>test message [TestLogger]\n", formatter.format(record));
+	public void testFiner() {
+		LogRecord log = createLogRecord(Level.FINER);
+		assertEquals("<7>test message [TestLogger]\n", formatter.format(log));
 	}
 
 	@Test
-	public void testSource() throws Exception {
-		LogRecord record = createLogRecord(Level.SEVERE);
-		record.setSourceClassName("TestClass");
-		record.setSourceMethodName("testMethod");
-		assertEquals("<3>test message [TestClass testMethod]\n", formatter.format(record));
+	public void testSource() {
+		LogRecord log = createLogRecord(Level.SEVERE);
+		log.setSourceClassName("TestClass");
+		log.setSourceMethodName("testMethod");
+		assertEquals("<3>test message [TestClass testMethod]\n", formatter.format(log));
 	}
 
 	@Test
-	public void testSource2() throws Exception {
-		LogRecord record = createLogRecord(Level.SEVERE);
-		record.setSourceClassName("TestClass");
-		assertEquals("<3>test message [TestClass]\n", formatter.format(record));
+	public void testSource2() {
+		LogRecord log = createLogRecord(Level.SEVERE);
+		log.setSourceClassName("TestClass");
+		assertEquals("<3>test message [TestClass]\n", formatter.format(log));
 	}
 
 	@Test
-	public void testThrowable() throws Exception {
-		LogRecord record = createLogRecord(Level.SEVERE);
-		record.setThrown(new Exception("something went wrong"));
-		String message = formatter.format(record);
+	public void testThrowable() {
+		LogRecord log = createLogRecord(Level.SEVERE);
+		log.setThrown(new Exception("something went wrong"));
+		String message = formatter.format(log);
 		// @formatter:off
 		String expected = "<3>test message [TestLogger]\n"
 				+ "java.lang.Exception: something went wrong\n"
@@ -71,10 +71,10 @@ public class JournaldFormatterTest {
 	}
 
 	private static LogRecord createLogRecord(Level level) {
-		LogRecord record = new LogRecord(level, "test message");
-		record.setMillis(1567537684956L);
-		record.setLoggerName("TestLogger");
-		return record;
+		LogRecord result = new LogRecord(level, "test message");
+		result.setMillis(1567537684956L);
+		result.setLoggerName("TestLogger");
+		return result;
 	}
 
 	@Before
